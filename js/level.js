@@ -9,7 +9,7 @@ const level = {
     levelsCleared: 0,
     // playableLevels: ["pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion"],
     //see level.populateLevels:   (intro, ... , reservoir, reactor, ... , gauntlet, final)    added later
-    playableLevels: ["labs", "rooftops", "skyscrapers", "warehouse", "highrise", "office", "aerie", "satellite", "sewers", "testChamber", "pavilion", "lock"],
+    playableLevels: ["labs", "fortress", "skyscrapers", "warehouse", "highrise", "office", "aerie", "satellite", "sewers", "testChamber", "pavilion", "lock"],
     communityLevels: ["stronghold", "basement", "crossfire", "vats", "run", "n-gon", "house", "perplex", "coliseum", "tunnel", "islands", "temple", "dripp", "biohazard", "stereoMadness"],
     trainingLevels: ["walk", "crouch", "jump", "hold", "throw", "throwAt", "deflect", "heal", "fire", "nailGun", "shotGun", "superBall", "matterWave", "missile", "stack", "mine", "grenades", "harpoon"],
     levels: [],
@@ -4990,7 +4990,7 @@ const level = {
             };
         }
     },
-    rooftops() {
+    fortress() {
         const elevator = level.elevator(1450, -990, 235, 45, -2000)
         const boost1 = level.boost(4950, 0, 1100)
 
@@ -5059,22 +5059,14 @@ const level = {
 
         //spawn.mapRect(-700, 0, 6250, 100); //ground
         spawn.mapRect(3400, 0, 2150, 100); //ground
-        spawn.mapRect(-700, -2000, 2125, 50); //Top left ledge
-        spawn.bodyRect(1300, -2125, 50, 125, 0.8);
-        spawn.bodyRect(1307, -2225, 50, 100, 0.8);
-        spawn.mapRect(-700, -2350, 50, 400); //far left starting left wall
-        spawn.mapRect(-700, -2010, 500, 50); //far left starting ground
-        spawn.mapRect(-700, -2350, 500, 50); //far left starting ceiling
-        spawn.mapRect(-250, -2350, 50, 200); //far left starting right part of wall
-        spawn.bodyRect(-240, -2150, 30, 36); //door to starting room
-        spawn.bodyRect(-240, -2115, 30, 36); //door to starting room
-        spawn.bodyRect(-240, -2080, 30, 35); //door to starting room
-        spawn.bodyRect(-240, -2045, 30, 35); //door to starting room
-        spawn.mapRect(1850, -2000, 650, 50);
-        spawn.bodyRect(200, -2150, 80, 220, 0.8);
-        spawn.mapRect(700, -2275, 600, 50);
-        spawn.mapRect(1000, -1350, 410, 50);
-        spawn.bodyRect(1050, -2350, 30, 30, 0.8);
+        spawn.mapRect(3400, 400, 50, 400); //far left wall
+	spawn.mapRect(2800, 200, 800, 200); //far right block    
+	    //working on level hehe
+	    
+	    
+	    
+	    
+	    
         // spawn.bodyRect(1625, -1100, 100, 75);
         // spawn.bodyRect(1350, -1025, 400, 25); // ground plank
         spawn.mapRect(-725, -1000, 2150, 100); //lower left ledge
