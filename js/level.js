@@ -5441,7 +5441,7 @@ const level = {
 
         spawn.mapRect(-300, 0, 5100, 300); //***********ground
         spawn.mapRect(-300, -350, 50, 400); //far left starting left wall
-        spawn.mapRect(-300, -10, 500, 50); //far left starting ground
+        spawn.mapRect(-350, -20, 300, 150); //far left starting ground
         spawn.mapRect(-300, -350, 500, 50); //far left starting ceiling
         spawn.mapRect(150, -350, 50, 200); //far left starting right part of wall
         spawn.bodyRect(170, -130, 14, 140, 1, spawn.propsFriction); //door to starting room
