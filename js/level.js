@@ -3427,269 +3427,29 @@ const level = {
         }
     },
     intro() {
-        // console.log(level.levelsCleared)
-        if (level.levelsCleared === 0) { //if this is the 1st level of the game
-            //wait to spawn power ups until unpaused
-            //power ups don't spawn in experiment mode, so they don't get removed at the start of experiment mode
-            const goal = simulation.cycle + 10
-
-            function cycle() {
-                if (simulation.cycle > goal) {
-                    if (localSettings.loreCount === 6) {
-                        powerUps.spawn(2095 + 15 * (Math.random() - 0.5), -2170, "field", false);
-                    } else {
-                        powerUps.spawnStartingPowerUps(2095 + 15 * (Math.random() - 0.5), -2070 - 125);
-                    }
-                    if (simulation.difficultyMode < 5) {
-                        powerUps.spawn(2095 + 15 * (Math.random() - 0.5), -2070 - 25, "heal", false);
-                        powerUps.spawn(2095 + 15 * (Math.random() - 0.5), -2070 - 75, "heal", false);
-                        powerUps.spawn(2095 + 15 * (Math.random() - 0.5), -2070, "research", false); //not on why difficulty
-                    }
-                } else {
-                    requestAnimationFrame(cycle);
-                }
-            }
-            requestAnimationFrame(cycle);
-
-            if (localSettings.levelsClearedLastGame < 3) {
-                if (!simulation.isCheating && !m.isShipMode && !build.isExperimentRun) {
-                    spawn.wireFoot();
-                    spawn.wireFootLeft();
-                    spawn.wireKnee();
-                    spawn.wireKneeLeft();
-                    spawn.wireHead();
-                    // for (let i = 0; i < 3; i++) powerUps.spawn(2095, -1220 - 50 * i, "tech", false); //unavailable tech spawns
-                    // spawn.mapRect(2000, -1025, 200, 25);
-                }
-            } else if (!build.isExperimentRun) {
-                simulation.trails()
-                //bonus power ups for clearing runs in the last game
-                if (!simulation.isCheating && localSettings.levelsClearedLastGame > 1) {
-                    for (let i = 0; i < localSettings.levelsClearedLastGame / 3; i++) powerUps.spawn(2095 + 2 * Math.random(), -1270 - 50 * i, "tech", false); //spawn a tech for levels cleared in last game
-                    simulation.makeTextLog(`for (let i <span class='color-symbol'>=</span> 0; i <span class='color-symbol'><</span> localSettings.levelsClearedLastGame <span class='color-symbol'>/</span> 3; i<span class='color-symbol'>++</span>)`);
-                    simulation.makeTextLog(`{ powerUps.spawn(m.pos.x, m.pos.y, "tech") <em>//simulation superposition</em>}`);
-                    localSettings.levelsClearedLastGame = 0 //after getting bonus power ups reset run history
-                    if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-                }
-            }
-            spawn.mapRect(2025, 0, 150, 50); //lid to floor hole
-        } else {
-            for (let i = 0; i < 60; i++) {
-                setTimeout(() => {
-                    if (level.levels[level.onLevel] === "intro") spawn.sneaker(2100, -1500 - 50 * i);
-                }, 2000 + 500 * i);
-            }
-        }
-        const wires = new Path2D() //pre-draw the complex lighting path to save processing
-        wires.moveTo(-150, -275)
-        wires.lineTo(80, -275)
-        wires.lineTo(80, -1000)
-        wires.moveTo(-150, -265)
-        wires.lineTo(90, -265)
-        wires.lineTo(90, -1000)
-        wires.moveTo(-150, -255)
-        wires.lineTo(100, -255)
-        wires.lineTo(100, -1000)
-        wires.moveTo(-150, -245)
-        wires.lineTo(1145, -245)
-        wires.lineTo(1145, 0)
-        wires.moveTo(-150, -235)
-        wires.lineTo(1135, -235)
-        wires.lineTo(1135, 0)
-        wires.moveTo(-150, -225)
-        wires.lineTo(1125, -225)
-        wires.lineTo(1125, 0)
-        wires.moveTo(-150, -215)
-        wires.lineTo(460, -215)
-        wires.lineTo(460, 0)
-        wires.moveTo(-150, -205)
-        wires.lineTo(450, -205)
-        wires.lineTo(450, 0)
-        wires.moveTo(-150, -195)
-        wires.lineTo(440, -195)
-        wires.lineTo(440, 0)
-
-        wires.moveTo(1155, 0)
-        wires.lineTo(1155, -450)
-        wires.lineTo(1000, -450)
-        wires.lineTo(1000, -1000)
-        wires.moveTo(1165, 0)
-        wires.lineTo(1165, -460)
-        wires.lineTo(1010, -460)
-        wires.lineTo(1010, -1000)
-        wires.moveTo(1175, 0)
-        wires.lineTo(1175, -470)
-        wires.lineTo(1020, -470)
-        wires.lineTo(1020, -1000)
-        wires.moveTo(1185, 0)
-        wires.lineTo(1185, -480)
-        wires.lineTo(1030, -480)
-        wires.lineTo(1030, -1000)
-        wires.moveTo(1195, 0)
-        wires.lineTo(1195, -490)
-        wires.lineTo(1040, -490)
-        wires.lineTo(1040, -1000)
-
-        wires.moveTo(1625, -1000)
-        wires.lineTo(1625, 0)
-        wires.moveTo(1635, -1000)
-        wires.lineTo(1635, 0)
-        wires.moveTo(1645, -1000)
-        wires.lineTo(1645, 0)
-        wires.moveTo(1655, -1000)
-        wires.lineTo(1655, 0)
-        wires.moveTo(1665, -1000)
-        wires.lineTo(1665, 0)
-
-        wires.moveTo(1675, -465)
-        wires.lineTo(2325, -465)
-        wires.lineTo(2325, 0)
-        wires.moveTo(1675, -455)
-        wires.lineTo(2315, -455)
-        wires.lineTo(2315, 0)
-        wires.moveTo(1675, -445)
-        wires.lineTo(2305, -445)
-        wires.lineTo(2305, 0)
-        wires.moveTo(1675, -435)
-        wires.lineTo(2295, -435)
-        wires.lineTo(2295, 0)
-
-        wires.moveTo(2335, 0)
-        wires.lineTo(2335, -710)
-        wires.lineTo(2600, -710)
-        wires.moveTo(2345, 0)
-        wires.lineTo(2345, -700)
-        wires.lineTo(2600, -700)
-        wires.moveTo(2355, 0)
-        wires.lineTo(2355, -690)
-        wires.lineTo(2600, -690)
-
         level.custom = () => {
-            //push around power ups stuck in the tube wall
-            if (!(simulation.cycle % 30)) {
-                for (let i = 0, len = powerUp.length; i < len; i++) {
-                    if (powerUp[i].position.y < -1000) powerUp[i].force.x += 0.01 * (Math.random() - 0.5) * powerUp[i].mass
-                }
-            }
-            //draw binary number
-            const binary = (localSettings.runCount >>> 0).toString(2)
-            const height = 20
-            const width = 8
-            const yOff = -40 //-580
-            let xOff = -130 //2622
-            ctx.strokeStyle = "#bff"
-            ctx.lineWidth = 1.5;
-            ctx.beginPath()
-            for (let i = 0; i < binary.length; i++) {
-                if (binary[i] === "0") {
-                    ctx.moveTo(xOff, yOff)
-                    ctx.lineTo(xOff, yOff + height)
-                    ctx.lineTo(xOff + width, yOff + height)
-                    ctx.lineTo(xOff + width, yOff)
-                    ctx.lineTo(xOff, yOff)
-                    xOff += 10 + width
-                } else {
-                    ctx.moveTo(xOff, yOff)
-                    ctx.lineTo(xOff, yOff + height)
-                    xOff += 10
-                }
-            }
-            ctx.stroke();
-
-            ctx.beginPath()
-            ctx.strokeStyle = "#ccc"
-            ctx.lineWidth = 5;
-            ctx.stroke(wires);
-
-            //squares that look like they keep the wires in place
-            ctx.beginPath()
-            ctx.rect(1600, -500, 90, 100)
-            ctx.rect(-55, -285, 12, 100)
-            ctx.rect(1100, -497, 8, 54)
-            ctx.rect(2285, -200, 80, 10)
-            ctx.rect(1110, -70, 100, 10)
-            ctx.fillStyle = "#ccc"
-            ctx.fill()
-
-            //power up dispenser
-            // ctx.beginPath()
-            // for (let i = 2; i < 10; i++) {
-            //     ctx.moveTo(2000, -100 * i)
-            //     ctx.lineTo(2080, -100 * i)
-            // }
-            // ctx.strokeStyle = "#ddd"
-            // ctx.lineWidth = 5;
-            // ctx.stroke();
-
-            // ctx.beginPath()
-            // for (let i = 2; i < 10; i++) {
-            //     ctx.arc(2040, -100 * i, 30, 0, 2 * Math.PI);
-            //     ctx.moveTo(2040, -100 * i)
-            // }
-            // ctx.fillStyle = "rgba(0,0,0,0.3)"
-            // ctx.fill()
-
-            // ctx.fillStyle = "rgba(240,255,255,0.5)"
-            // ctx.fillRect(2000, -1000, 80, 700)
-
-            //exit room
-            ctx.fillStyle = "#f2f2f2"
-            ctx.fillRect(2600, -600, 400, 300)
-
-            // level.enter.draw();
             level.exit.drawAndCheck();
+
+            level.enter.draw();
         };
+        level.customTopLayer = () => {};
+        level.setPosToSpawn(0, -50); //normal spawn
+        level.exit.x = 1500;
+        level.exit.y = -1875;
+        spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20);
+        level.defaultZoom = 1800
+        simulation.zoomTransition(level.defaultZoom)
+        document.body.style.backgroundColor = "#d8dadf";
+        // powerUps.spawnStartingPowerUps(1475, -1175);
+        // spawn.debris(750, -2200, 3700, 16); //16 debris per level
 
-        level.customTopLayer = () => {
-            //exit room glow
-            ctx.fillStyle = "rgba(0,255,255,0.05)"
-            ctx.fillRect(2600, -600, 400, 300)
-            //draw shade for ceiling tech
-            ctx.fillStyle = "rgba(68, 68, 68,0.95)"
-            ctx.fillRect(2030, -2800, 150, 1800);
-            ctx.fillStyle = "rgba(68, 68, 68,0.95)"
-            ctx.fillRect(2030, 0, 150, 1800);
-        };
-
-
-
-        level.setPosToSpawn(460, -100); //normal spawn
-        // level.enter.x = -1000000; //hide enter graphic for first level by moving to the far left
-        level.exit.x = 2800;
-        level.exit.y = -335;
-        spawn.mapRect(level.exit.x, level.exit.y + 25, 100, 100); //exit bump
-        simulation.zoomScale = 1000 //1400 is normal
-        level.defaultZoom = 1600
-        simulation.zoomTransition(level.defaultZoom, 1)
-        document.body.style.backgroundColor = "#e1e1e1";
-
-        spawn.mapRect(-2750, -2800, 2600, 4600); //left wall
-        spawn.mapRect(3000, -2800, 2600, 4600); //right wall
-
-        // spawn.mapRect(-250, 0, 3600, 1800); //ground
-        spawn.mapRect(-250, 0, 2300, 1800); //split roof        
-        spawn.mapRect(2150, 0, 1200, 1800); //split roof
-        spawn.mapRect(2025, -3, 25, 15); //lip on power up chamber
-        spawn.mapRect(2150, -3, 25, 15); //lip on power up chamber
-
-        // spawn.mapRect(-250, -2800, 3600, 1800); //roof
-        spawn.mapRect(-250, -2800, 2300, 1800); //split roof        
-        map[map.length - 1].friction = 0
-        map[map.length - 1].frictionStatic = 0
-        spawn.mapRect(2150, -2800, 1200, 1800); //split roof
-        map[map.length - 1].friction = 0
-        map[map.length - 1].frictionStatic = 0
-        spawn.mapRect(2025, -1010, 25, 13); //lip on power up chamber
-        spawn.mapRect(2150, -1010, 25, 13); //lip on power up chamber
-
-        spawn.mapRect(2600, -300, 500, 500); //exit shelf
-        spawn.mapRect(2600, -1200, 500, 600); //exit roof
-        spawn.mapRect(-95, -1100, 80, 110); //wire source
-        spawn.mapRect(410, -10, 90, 20); //small platform for player
-
-        spawn.bodyRect(2425, -120, 70, 50);
-        spawn.bodyRect(2400, -100, 100, 60);
-        spawn.bodyRect(2500, -150, 100, 150); //exit step
+        spawn.mapRect(-100, 0, 1000, 100);
+        // spawn.bodyRect(1540, -1110, 300, 25, 0.9); 
+        // spawn.randomSmallMob(1300, -70);
+        // spawn.randomMob(2650, -975, 0.8);
+        // spawn.randomGroup(1700, -900, 0.4);
+        // if (simulation.difficulty > 1) spawn.randomLevelBoss(2200, -1300);
+        powerUps.addResearchToLevel() //needs to run after mobs are spawned
     },
     reservoir() {
         level.exit.x = 1700;
